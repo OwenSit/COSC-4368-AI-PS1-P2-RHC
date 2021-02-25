@@ -2,6 +2,7 @@ import random, sys
 
 num_sol = 0
 best_fitness = sys.maxsize
+best_sp = []
 
 
 def fitness_fn(x, y):
@@ -16,14 +17,14 @@ def fitness_fn(x, y):
 
 
 def RHC(sp, p, z, seed):
-    global num_sol, best_fitness
-    num_sol = 0
+    global num_sol, best_fitness, best_sp
     z = float(z)
 
     # set the seed:
     random.seed(seed)
 
     for i in range(int(p)):
+        # best_sp = []
         # random sign:
         sign = [-1, 1][random.randrange(2)]
         z1 = sign * (random.random() * 10 % z)
@@ -42,22 +43,26 @@ def RHC(sp, p, z, seed):
 
         if temp_fitness < best_fitness:
             best_fitness = temp_fitness
-            best_sp = sp
+            best_sp = sp.copy()
+            print(sp)
+            print(" " + str(best_fitness))
 
     return best_sp
 
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
+    my_best_sp = []
+
     if len(sys.argv) != 6:
         print("not enough argument!")
         sys.exit()
 
     sp1 = float(sys.argv[1])
     sp2 = float(sys.argv[2])
-    p = sys.argv[3]
-    z = sys.argv[4]
-    seed = sys.argv[5]
+    my_p = sys.argv[3]
+    my_z = sys.argv[4]
+    my_seed = sys.argv[5]
 
     if (sp1 < -2) or (sp1 > 2):
         print("sp should start with range [-2,2]")
@@ -67,12 +72,12 @@ if __name__ == '__main__':
         print("sp should start with range [-2,2]")
         sys.exit()
 
-    sp = [sp1, sp2]
+    my_sp = [sp1, sp2]
 
     for i in range(32):
-        best_sp = RHC(sp, p, z, seed)
+        my_best_sp = RHC(my_sp, my_p, my_z, my_seed).copy()
 
     print("best solution: ")
-    print(best_sp)
+    print(my_best_sp)
     print("num solutions generated: \n" + str(num_sol))
     print("best fitness: \n" + str(best_fitness))
