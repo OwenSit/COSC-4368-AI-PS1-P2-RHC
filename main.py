@@ -1,6 +1,7 @@
 import random
 import sys
 import time
+import numpy as np
 
 num_sol = 0
 local_best_fitness = sys.maxsize
@@ -68,9 +69,9 @@ if __name__ == '__main__':
 
     """The following implement is asking using for arguments, which is the slow way"""
 
-    for my_sp in sp_arr:
-        for my_p in p_arr:
-            for my_z in z_arr:
+    for my_p in p_arr:
+        for my_z in z_arr:
+            for my_sp in sp_arr:
                 for my_seed in seed_arr:
                     local_best_fitness = sys.maxsize
                     num_sol = 0
@@ -85,7 +86,7 @@ if __name__ == '__main__':
                     print("SP:", end=" ")
                     print(my_sp, end=" ")
                     print("generated_best_SP:", end=" ")
-                    print(temp_best_sp, end=" ")
+                    print(np.round(temp_best_sp, 3), end=" ")
                     print("p:", end=" ")
                     print(my_p, end=" ")
                     print("z:", end=" ")
@@ -95,11 +96,11 @@ if __name__ == '__main__':
                     print("seed:", end=" ")
                     print(my_seed, end=" ")
                     print("runtime:", end=" ")
-                    print(temp_time_taken, end="sec ")
+                    print("{:.2e}".format(temp_time_taken), end="sec ")
                     print("num_sol:", end=" ")
                     print(num_sol, end=" ")
                     print("fitness:", end=" ")
-                    print(local_best_fitness, end="")
+                    print(round(local_best_fitness), end="")
 
     print("\n")
     best_fitness = min(global_fitness)
