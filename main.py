@@ -40,8 +40,6 @@ def RHC(sp, p, z, seed):
         local_sp[0] += z1
         local_sp[1] += z2
 
-        num_sol += 1
-
         if not ((local_sp[0] >= (-2)) and (local_sp[1] <= 2)):
             print("x, y is out of range")
             continue
@@ -51,6 +49,11 @@ def RHC(sp, p, z, seed):
         if temp_fitness < local_best_fitness:
             local_best_fitness = temp_fitness
             local_best_sp = local_sp.copy()
+            num_sol += 1
+
+        else:
+            local_sp[0] -= z1
+            local_sp[1] -= z2
 
     return local_best_sp
 
@@ -103,5 +106,16 @@ if __name__ == '__main__':
                     print(round(local_best_fitness), end="")
 
     print("\n")
+    print("the 33rd runtime: ")
     best_fitness = min(global_fitness)
     print("The best fitness is: ", str(best_fitness))
+    local_best_fitness = sys.maxsize
+    num_sol = 0
+    my_sp = [0, 0]
+    my_p = 1000
+    my_z = 0.01
+    seed = 1
+    best_sp = RHC(my_sp, my_p, my_z, seed)
+    print("num_sol: " + str(num_sol))
+    print(best_sp)
+    print(local_best_fitness)
